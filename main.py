@@ -1,4 +1,3 @@
-from cProfile import run
 from pathlib import Path
 import shutil
 import os
@@ -11,6 +10,11 @@ def get_contents():
             #for xx in Path(x).iterdir():
             #    if xx.is_dir(): contents += ('   +  %s\n' %str(xx).lstrip(str(x)).lstrip("\\"))
             #    else: contents += ('   *  %s\n' %str(xx).lstrip(str(x)).lstrip("\\"))
+    return str(contents)
+
+def get_subcontents(file):
+    contents = f"\nSubcontents\n{'-' * 11}\n"
+    for x in Path(file).iterdir(): contents += ('+  %s\n' %x) if x.is_dir() else ('*  %s\n' %x)
     return str(contents)
 
 def print_box(txt, indent=2):
@@ -54,7 +58,7 @@ def main():
         print_box(get_contents())
         options = 'Main cmd: (cd) / (open) / (rm) / (help) / (exit)\n'
         cmd = str(input(options))
-        if any(map(lambda _: _ in cmd, ('cd','rm','open','help'))):
+        if any(map(lambda _: _ in cmd, ('cd','rm','open','help','ls'))):
             try:
                 run_cmd, file = cmd.split(' ', 1)
             except ValueError:
@@ -62,10 +66,11 @@ def main():
         else: exit()
         if run_cmd == 'cd': cd(file)
         elif run_cmd == 'rm': removeFile(Path(file))
-        elif run_cmd == 'help':
-            print_msg(HELP)
-        elif run_cmd == 'open':
-            print_msg(readFile(file))
+        elif run_cmd == 'help': print_msg(HELP)
+        elif run_cmd == 'open': print_msg(readFile(file))
+        elif run_cmd == 'ls' : 
+            print_box(get_subcontents(file))
+            input('<Enter to continue...>')
         else: exit()
 
 if __name__ == '__main__':
