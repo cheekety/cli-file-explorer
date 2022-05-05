@@ -38,6 +38,13 @@ def print_msg(msg):
     print(msg)
     input('<Enter to exit...>') 
 
+HELP = "Python CLI File-Explorer\n\n \
+    This is a simple file-explorer made with Python. Main features include:\n\n \
+    \t(cd) to change directory.\n \
+    \t(open) to read and print files in the terminal.\n \
+    \t(rm) to remove/delete files and folders.\n\n \
+Contributions are welcomed.\n"
+
 #TODO: Add feature to view contents of directory without cd
 #TODO: Add feature to create/move folders & files
 
